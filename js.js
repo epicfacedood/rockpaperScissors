@@ -15,9 +15,11 @@ function getComputerChoice() {
 
 function getHumanChoice() {
     let choice;
-    while (choice !== "rock" && choice !== "paper" && choice !== "scissors"){
-        choice = (prompt("What is your choice? Rock, Paper, or Scissors")).toLowerCase();
-    }
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            choice = button.id;
+        });
+    });
     return choice;
 }
 
@@ -53,6 +55,7 @@ function playRound(humanChoice, computerChoice) {
         console.log("YOU WON");
         return "a";
     }
+    roundNumber++;
 }
 
 
@@ -70,17 +73,34 @@ for (let i = 0; i < 5; i++){
     } else if (roundResult == "b"){
         computerScore++;
     }
-    
     console.log("Computer Score: " + computerScore + " Your Score: " + humanScore);
 }
-    if (humanScore > computerScore) {
+    if (humanScore === 5) {
+        div.textContent = "You won!" + humanScore.toString() + computerScore.toString();
         console.log("you won!");
-    } else if (computerScore > humanScore) {
+    } else if (computerScore === 5) {
+        div.textContent = "You lost!" + humanScore.toString() + computerScore.toString();
         console.log("you lost!");
-    } else {
-        console.log("its a draw");
-    }
-
+    } 
+    div.textContent = "Round: " + roundNumber.toString();
+    container.appendChild(div);
 }
+const buttons = document.querySelectorAll("button");
+const container = document.querySelector(".container");
+let roundNumber = 1;
+
+const div = document.createElement("p");
+div.textContent = "Round: " + roundNumber.toString();
+container.appendChild(div);
+
+
+
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        alert('You chose ' + button.id);
+        choice = button.id;
+    });
+});
 
 playGame();
